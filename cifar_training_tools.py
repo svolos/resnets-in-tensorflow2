@@ -16,7 +16,7 @@ def cifar_training(model, logdir, run_name, lr_values=[0.01, 0.1, 0.01, 0.001], 
     optimizer = tf.keras.optimizers.SGD(schedule, momentum=0.9, nesterov=nesterov)
     loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
 
-    ds = tfds.load('cifar10', as_supervised=True, in_memory=True)
+    ds = tfds.load('cifar10', as_supervised=True)
     std = tf.reshape((0.2023, 0.1994, 0.2010), shape=(1, 1, 3))
     mean= tf.reshape((0.4914, 0.4822, 0.4465), shape=(1, 1, 3))
     
@@ -99,7 +99,8 @@ def cifar_training(model, logdir, run_name, lr_values=[0.01, 0.1, 0.01, 0.001], 
                 
             cls_loss.reset_states()
             accuracy.reset_states()
-            
+        
+        print(f"training step completed {training_step}")
     
     
 def cifar_error_test(model, tr_len=20, vd_len=2):
@@ -107,7 +108,8 @@ def cifar_error_test(model, tr_len=20, vd_len=2):
     loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
     optimizer = tf.keras.optimizers.SGD(0.01)
 
-    ds = tfds.load('cifar10', as_supervised=True, in_memory=True)
+    #ds = tfds.load('cifar10', as_supervised=True, in_memory=True)
+    ds = tfds.load('cifar10', as_supervised=True)
     std = tf.reshape((0.2023, 0.1994, 0.2010), shape=(1, 1, 3))
     mean= tf.reshape((0.4914, 0.4822, 0.4465), shape=(1, 1, 3))
     
